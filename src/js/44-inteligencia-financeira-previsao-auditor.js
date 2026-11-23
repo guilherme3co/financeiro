@@ -42,11 +42,11 @@ function renderIntel(){var B=$('xBox');if(!B||!st)return;B.innerHTML='';patriGua
  var c1=iCard('Previsão','📅'),V=vencs(),neg=diaNegativo();
  if(neg)c1.appendChild(el_('p','idica al','⚠️ Dia '+neg.dia+' o saldo fica negativo ('+brl(neg.saldo)+') no ritmo atual, contando as contas a vencer.'));
  c1.appendChild(el_('b',null,'Contas a vencer'));
- if(!V.length)c1.appendChild(el_('p','imsg',(st.dividas||[]).some(function(d){return d.dia})?'Tudo pago neste mês. 🎉':'Coloque o dia do vencimento nas contas em Investir → Planejamento. O app avisa 3 dias antes.'));
+ if(!V.length)c1.appendChild(el_('p','imsg',(st.dividas||[]).some(function(d){return d.dia})?'Tudo pago neste mês. 🎉':'Coloque o dia do vencimento nas contas em Planejamento. O app avisa 3 dias antes.'));
  V.forEach(function(v){var r=el_('div','irow ivenc'+(v.falta<0?' al':v.falta<=3?' at':'')),a=el_('span');a.appendChild(el_('b',null,v.d.nome));a.appendChild(el_('small',null,' · '+txtFalta(v.falta)+' (dia '+(+v.data.slice(8))+')'));r.appendChild(a);var bx=el_('div','ivr');bx.appendChild(el_('b',null,brl(v.val)));var pb=el_('button','add pgb','Paguei');pb.type='button';pb.onclick=function(){paguei(v.d);renderIntel()};bx.appendChild(pb);r.appendChild(bx);c1.appendChild(r)});
  var P=prevMeses(3);if(P[0].renda>0||P.some(function(x){return x.contas||x.cart})){c1.appendChild(el_('b',null,'Próximos meses'));var tb=rTab(['','Entra','Sai','Sobra'],P.map(function(x){return[mesNome(x.ym).slice(0,3),{t:brl(x.renda),n:1},{t:brl(r2(x.contas+x.cart+x.va)),n:1},{t:brl(x.sobra),n:1}]}));tb.classList.add('itab');c1.appendChild(tb);
   c1.appendChild(el_('p','imsg','Sai = contas e dívidas + parcelas do cartão + gasto do dia a dia (média de '+brl(gastoVar())+'/mês).'));var ruim=P.filter(function(x){return x.sobra<0})[0];if(ruim)c1.appendChild(el_('p','idica al','Em '+mesNome(ruim.ym).toLowerCase()+' falta '+brl(-ruim.sobra)+'. Segure compras parceladas.'))}
- else c1.appendChild(el_('p','imsg','Cadastre o salário em Investir → Planejamento para ver os próximos meses.'));B.appendChild(c1);
+ else c1.appendChild(el_('p','imsg','Cadastre o salário em Planejamento para ver os próximos meses.'));B.appendChild(c1);
  /* 2. auditor */
  var c2=iCard('Auditor','🔍'),S=assinaturas(),F=formiga(),N=foraNormal(),D=duplicados(),sem=st.items.filter(function(i){return !i.ent&&i.cor==='sem'}).length,achou=0;
  if(S.length){achou++;var ts=r2(S.reduce(function(a,x){return a+x.val},0)),d=el_('details','iobj'),sm=el_('summary');sm.appendChild(el_('b',null,'🔁 Assinaturas: '+brl(ts)+'/mês'));sm.appendChild(el_('small',null,S.length+(S.length===1?' gasto que se repete':' gastos que se repetem')+' · '+brl(r2(ts*12))+' por ano'));d.appendChild(sm);S.forEach(function(x){iLinha(d,x.nome,brl(x.val))});c2.appendChild(d)}

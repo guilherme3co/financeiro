@@ -1,8 +1,8 @@
 /* ---------- INVESTIR: prontidão, simulador, onde guardar, rendendo bem, meta, projeção e taxas ---------- */
-var IT={cur:'inv'},SIM=null,rendMes=0,txErro=false;
-function itTab(k){if(['inv','pla','gua'].indexOf(k)<0)k='inv';IT.cur=k;Array.prototype.forEach.call(document.querySelectorAll('#itabs button'),function(b){var on=b.getAttribute('data-it')===k;b.setAttribute('aria-selected',on?'true':'false')});
- $('itInv').hidden=k!=='inv';$('itPla').hidden=k!=='pla';$('itGua').hidden=k!=='gua';
- if(k==='inv')renderInvest();if(k==='pla'){renderPlano();desenhaDiv()}if(k==='gua')renderGuardados();window.scrollTo(0,0);setTimeout(function(){tour(k==='inv'?'pgi':k==='pla'?'pgp':'pg3')},380)}
+var IT={cur:'pla'},SIM=null,rendMes=0,txErro=false;
+function itTab(k){if(['pla','gua'].indexOf(k)<0)k='pla';IT.cur=k;Array.prototype.forEach.call(document.querySelectorAll('#itabs button'),function(b){var on=b.getAttribute('data-it')===k;b.setAttribute('aria-selected',on?'true':'false')});
+ $('itPla').hidden=k!=='pla';$('itGua').hidden=k!=='gua';
+ if(k==='pla'){renderPlano();desenhaDiv()}if(k==='gua')renderGuardados();window.scrollTo(0,0);setTimeout(function(){tour(k==='pla'?'pgp':'pg3')},380)}
 Array.prototype.forEach.call(document.querySelectorAll('#itabs button'),function(b){b.onclick=function(){itTab(b.getAttribute('data-it'))}});
 function pctBR(x,d){return(Number(x)||0).toFixed(d==null?2:d).replace('.',',')+'%'}
 function cdiUlt(){var c=st.cdi,ks=Object.keys(c.dias||{}).sort(),v=ks.length?Number(c.dias[ks[ks.length-1]]):0;return v>0?r2((Math.pow(1+v/100,252)-1)*100):0}

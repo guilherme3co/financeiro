@@ -35,8 +35,8 @@ async function lanca(pg,frase){await pg.click('#fab');await pg.click('#ablan');i
  await lanca(pg,'recebi 200 no pix');
  t('lança entrada',await pg.evaluate(()=>st.items.some(i=>i.ent&&i.val===200)));
  // menu + e todas as telas
- await pg.click('#fab');t('+ mostra as 6 opções',(await pg.$$eval('#mais .maisl button',a=>a.length))===6);await pg.keyboard.press('Escape');
- for(const [id,pgid] of [['abinv','pgi'],['abint','pgx'],['abmen','pgk'],['abhis','pg4'],['abcas','pgy']]){await pg.click('#fab');await pg.click('#'+id);await pg.waitForTimeout(400);t('abre a tela '+pgid,await pg.evaluate(p=>document.getElementById(p).className.indexOf('on')>=0,pgid))}
+ await pg.click('#fab');t('+ mostra as 5 opções',(await pg.$$eval('#mais .maisl button',a=>a.length))===5);await pg.keyboard.press('Escape');
+ for(const [id,pgid] of [['abint','pgx'],['abmen','pgk'],['abhis','pg4'],['abcas','pgy']]){await pg.click('#fab');await pg.click('#'+id);await pg.waitForTimeout(400);t('abre a tela '+pgid,await pg.evaluate(p=>document.getElementById(p).className.indexOf('on')>=0,pgid))}
  t('histórico mostra os lançamentos',/padaria/i.test(await pg.textContent('#listaHist')));
  // configurações
  await pg.click('#eng');await pg.waitForTimeout(300);const blocos=await pg.$$eval('#cfg details.cfgs',a=>a.length);

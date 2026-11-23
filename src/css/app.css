@@ -367,7 +367,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 .mtelas button span{font-size:24px}
 .mdot{position:absolute;top:8px;right:10px;width:9px;height:9px;border-radius:50%;background:var(--neg)}.mdot[hidden]{display:none}
 .fab.nv::after{content:'';position:absolute;top:6px;right:6px;width:12px;height:12px;border-radius:50%;background:var(--neg);border:2px solid var(--bg)}
-.itabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:5px;margin:4px 0 14px;position:sticky;top:0;z-index:5}
+.itabs{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:5px;margin:4px 0 14px;position:sticky;top:0;z-index:5}
 .itabs button{border:0;border-radius:10px;background:transparent;color:var(--mute);font:700 13px 'DM Sans',sans-serif;padding:10px 2px;cursor:pointer;min-height:42px}
 .itabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
 .icard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0 0 12px}

@@ -1,5 +1,5 @@
 /* ---------- telas: login, primeiro uso, app ---------- */
-var cur=0,voltaK=0,PGS=['pg1','pgi','pgk','pg4','pgx','pgy'],TITS=['Principal','Investir','Mentor','Histórico','Inteligência','Casal'],TBS=['t1','tp','tk','t2'],ALLP=['pg1','pg3','pg4','pgp','pgk','pgi','pgx','pga','pgs','pgc','pgr','pgy'];
+var cur=0,voltaK=0,PGS=['pg1','pgi','pgk','pg4','pgx','pgy'],TITS=['Principal','Planejamento','Mentor','Histórico','Inteligência','Casal'],TBS=['t1','tp','tk','t2'],ALLP=['pg1','pg3','pg4','pgp','pgk','pgi','pgx','pga','pgs','pgc','pgr','pgy'];
 function marcaNav(k){TBS.forEach(function(id,i){$(id).setAttribute('aria-selected',i===k?'true':'false')});$('ptit').textContent=k>=0?TITS[k]:''}
 function tela(qual){if(qual==='pga'||qual==='pgs'){$('bio').hidden=true;bioAberto=false;bioOk=bioNao=null;$('aviso').hidden=true;$('lanc').hidden=true;$('nov').hidden=true;$('men').hidden=true;MEN.esp=null}ALLP.forEach(function(i){$(i).className='pg'});$(qual).className='pg on';$('top').hidden=(qual==='pga'||qual==='pgs');window.scrollTo(0,0);fabUpd()}
 function fabUpd(){var on=!!st&&['pg1','pgi','pgk','pg4','pgc','pgx','pgy'].some(function(i){return $(i).className.indexOf('on')>=0});$('fab').hidden=!on;try{micfUpd()}catch(e){}}

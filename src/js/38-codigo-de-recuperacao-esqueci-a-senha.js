@@ -61,7 +61,7 @@ var AV_ERR='';
 function avUI(){var c=$('avchk');if(!c||!st)return;var on=!!(st.avisos&&st.avisos.on),m=$('avimsg');c.checked=on;
  if(!avPode()){c.disabled=true;m.textContent=avIOS()&&!avInstalado()?'No iPhone: abra no Safari, toque em Compartilhar → “Adicionar à Tela de Início” e ligue por lá.':'Este navegador não recebe avisos.';return}
  c.disabled=false;if(on&&Notification.permission==='denied'){m.textContent='⚠️ Os avisos estão bloqueados nas permissões do navegador. Libere as notificações deste site.';return}
- var n=avDatas().length;m.textContent=on?'✅ Ligado. '+(n?n+(n===1?' data de vencimento programada.':' datas de vencimento programadas.'):'Coloque o dia do vencimento nas contas (Investir → Planejamento).'):''}
+ var n=avDatas().length;m.textContent=on?'✅ Ligado. '+(n?n+(n===1?' data de vencimento programada.':' datas de vencimento programadas.'):'Coloque o dia do vencimento nas contas (Planejamento).'):''}
 function avLiga(){var m=$('avimsg'),c=$('avchk');if(!avPode())return avUI();m.textContent='Pedindo permissão...';c.disabled=true;
  Notification.requestPermission().then(function(p){if(p!=='granted')throw 'neg';return avReg()}).then(function(r){return r.pushManager.getSubscription().then(function(s){return s||r.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:avU8(AV_PUB)})})})
  .then(function(sub){st.avisos={on:true,tok:(st.avisos&&st.avisos.tok)||casHex(crypto.getRandomValues(new Uint8Array(32))),ult:'',sig:''};save();return avEnvia(sub,true)})

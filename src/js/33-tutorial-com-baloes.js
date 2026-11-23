@@ -6,7 +6,7 @@ pg1:[
 {e:'#limc',t:'Limite',x:'Seu limite do crédito. Gasto no crédito sai daqui, não do Disponível.'},
 {e:'#fatbtn',t:'Pagar fatura',x:'Paga a fatura com o dinheiro do débito e devolve o valor ao Limite.'},
 {e:'#gaugeCard .gauge-nav',t:'Painéis',x:'Deslize ou toque nas setas para ver quanto você tem guardado. Toque no valor para abrir os guardados.'},
-{e:'#fab',t:'Botão +',x:'Tudo começa aqui. Toque para ver as opções: Lançar, Investir, Casal, Inteligência, Mentor e Histórico.'},
+{e:'#fab',t:'Botão +',x:'Tudo começa aqui. Toque para ver as opções: Lançar, Casal, Inteligência, Mentor e Histórico.'},
 {e:'#prev',t:'Previsão',x:'Quanto sobra no fim do mês se você continuar gastando nesse ritmo.'},
 {e:'#ultimos',t:'Últimos lançamentos',x:'Os 3 mais recentes. Toque para editar ou em Ver todos.'},
 {e:'#mic1',t:'Microfone',x:'Toque e fale: “gastei 12 no pix na padaria”. Com valor e pagamento, salva sozinho.'},
@@ -33,8 +33,7 @@ pgp:[
 pgx:[
 {e:'#xBox .icard',t:'Inteligência',x:'Previsão com contas a vencer, auditor que encontra gastos estranhos, simulador de compra e o seu patrimônio.'}],
 pgi:[
-{e:'#itabs',t:'Investir',x:'Três abas: Investir (simulador, onde guardar, metas e projeção), Planejamento (salário e dívidas) e Guardados.'},
-{e:'#invBox .icard',t:'Taxas de hoje',x:'CDI, Selic, IPCA e poupança, buscados no Banco Central. Só as taxas vêm da internet: seus dados ficam no celular.'}],
+{e:'#itabs',t:'Planejamento e Guardados',x:'Duas abas: Planejamento (salário e dívidas) e Guardados.'}],
 pgk:[
 {e:'#menab',t:'Mentor',x:'Converse com o mentor: resumo do dia, plano para sair das dívidas, missões e dúvidas.'}],
 pg4:[
