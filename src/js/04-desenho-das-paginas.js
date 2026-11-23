@@ -5,7 +5,7 @@ mDot();
 if(geraParcelas())save();
 var saldo=st.start,g={rec:0,uti:0,des:0,gua:0,sem:0},tg=0,tgua=0,gd=0,dv=0;
 st.items.forEach(function(i){if(i.ent){g.rec+=i.val;saldo+=i.val}else if(i.cor==='gua'){if(i.ret){tgua-=i.val;if(i.dev){saldo+=i.val;dv+=i.val}}else{g.gua+=i.val;tgua+=i.val}}else{g[i.cor]+=i.val;tg+=i.val;if(!pagCred(i)){saldo-=i.val;gd+=i.val}}});
-var ft=somaFat(st.faturas);saldo-=ft;gd+=ft;
+var ft=somaFat(st.faturas);saldo-=ft;gd+=ft;var dd=dvDesc();saldo-=dd;gd+=dd;
 saldo=Math.round(saldo*100)/100;TOPO=st.start+g.rec+dv;
 var el=$('saldo');el.textContent=brl(saldo);el.className='saldo'+(saldo<0?' neg':'');
 $('gasto').textContent=brl(tg);

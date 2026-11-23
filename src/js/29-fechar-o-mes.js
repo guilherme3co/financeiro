@@ -1,7 +1,7 @@
 /* ---------- fechar o mês ---------- */
 var MESES=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 function totaisMes(){var g={rec:0,gasto:0,gua:0,ret:0};st.items.forEach(function(i){if(i.ent)g.rec+=i.val;else if(i.cor==='gua'){if(i.ret)g.ret+=i.val;else g.gua+=i.val}else g.gasto+=i.val});return g}
-function saldoAtual(){var s=st.start;st.items.forEach(function(i){if(i.ent)s+=i.val;else if(i.cor==='gua'){if(i.ret&&i.dev)s+=i.val}else if(!pagCred(i))s-=i.val});s-=somaFat(st.faturas);return Math.round(s*100)/100}
+function saldoAtual(){var s=st.start;st.items.forEach(function(i){if(i.ent)s+=i.val;else if(i.cor==='gua'){if(i.ret&&i.dev)s+=i.val}else if(!pagCred(i))s-=i.val});s-=somaFat(st.faturas);s-=dvDesc();return Math.round(s*100)/100}
 function rotuloMes(){var ds=st.items.map(function(i){return i.d}).filter(Boolean).sort(),d=ds.length?ds[ds.length-1]:hoje(),p=d.split('-');return MESES[(+p[1])-1]+'/'+p[0]}
 var rArm=false,rTm=null;
 /* fecha um mês: tira da lista os lançamentos daquele mês e leva o saldo para o mês seguinte */

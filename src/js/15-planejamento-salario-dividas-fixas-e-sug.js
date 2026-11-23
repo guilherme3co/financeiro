@@ -7,13 +7,15 @@ function mesAt(){return hoje().slice(0,7)}
 function ehPar(d){return d.n>1&&d.total>0}
 function parcBase(d){return Math.round(d.total/d.n*100)/100}
 function parcVal(d,k){return k>=d.n?Math.round((d.total-parcBase(d)*(d.n-1))*100)/100:parcBase(d)}
-function dvPago(d){return ehPar(d)?d.ult===mesAt():!!d.pago}
+function dvPago(d){return ehPar(d)?d.ult===mesAt():!!d.pago&&d.pm===mesAt()}
 function dvAtivo(d){return ehPar(d)?(d.pagas<d.n||d.ult===mesAt()):true}
 function dvIdx(d){return Math.min(Math.max(dvPago(d)?d.pagas:d.pagas+1,1),d.n)}
 function dvValor(d){return ehPar(d)?parcVal(d,dvIdx(d)):d.valor}
 function dvRest(d){var pg=d.pagas>=d.n?d.total:parcBase(d)*d.pagas;return Math.max(0,Math.round((d.total-pg)*100)/100)}
 function dvInfo(d){if(!ehPar(d))return 'Fixa · todo mês';var b='Parcela '+dvIdx(d)+' de '+d.n+' · ';return b+(dvPago(d)?(d.pagas>=d.n?'última parcela paga, quitada!':'paga neste mês · faltam '+brl(dvRest(d))):'faltam '+brl(dvRest(d))+' no total')}
-function dvMarca(d,on){if(ehPar(d)){if(on&&d.ult!==mesAt()&&d.pagas<d.n){d.pagas++;d.ult=mesAt()}else if(!on&&d.ult===mesAt()){d.pagas=Math.max(0,d.pagas-1);d.ult=''}}else d.pago=!!on}
+function dvMarca(d,on){if(ehPar(d)){if(on&&d.ult!==mesAt()&&d.pagas<d.n){d.pagas++;d.ult=mesAt()}else if(!on&&d.ult===mesAt()){d.pagas=Math.max(0,d.pagas-1);d.ult=''}}else{d.pago=!!on;d.pm=on?mesAt():''}}
+/* contas do planejamento já pagas neste mês que ainda NÃO entraram como lançamento (evita contar duas vezes) */
+function dvDesc(){var mm=mesAt(),tot=0;(st.dividas||[]).forEach(function(d){if(!dvAtivo(d)||!dvPago(d))return;var v=dvValor(d);if(!(v>0))return;var nd=normT(d.nome);var ja=nd.length>=3&&st.items.some(function(i){return !i.ent&&i.cor!=='gua'&&String(i.d).slice(0,7)===mm&&Math.abs((Number(i.val)||0)-v)<0.005&&normT(i.desc).indexOf(nd)>=0});if(!ja)tot+=v});return r2(tot)}
 function normT(t){return String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim()}
 function ligaDivida(it){if(it.ent||it.cor==='gua')return null;var nd=normT(it.desc),best=null;if(!nd)return null;
 (st.dividas||[]).forEach(function(d){if(!dvAtivo(d)||dvPago(d))return;var dn=normT(d.nome);if(dn.length<3)return;if(nd.indexOf(dn)>=0||(nd.length>=4&&dn.indexOf(nd)>=0)){var vd=dvValor(d),pal=/parcel|presta|pagamento|mensalidade|fatura|boleto|conta/.test(nd),perto=Math.abs((Number(it.val)||0)-vd)<=Math.max(1,vd*0.1);if(!(pal||perto))return;if(!best||dn.length>normT(best.nome).length)best=d}});
@@ -51,7 +53,7 @@ gv.appendChild(el_('summary',null,'Pagas do mês ('+pagas.length+') · '+brl(pag
 else box.appendChild(el_('p','pl-tip','Nenhuma dívida cadastrada. Adicione abaixo para calcular a sobra.'))}
 function linhaDivida(d,par){var w=$('dividas'),r=document.createElement('div');r.className='crow dv4';var p=!!(par||(d&&ehPar(d)));
 r.innerHTML='<input class="cn" aria-label="Nome da dívida" placeholder="'+(p?'Ex.: Celular':'Ex.: Aluguel')+'" autocomplete="off"><input class="cs" aria-label="'+(p?'Valor total':'Valor mensal')+'" inputmode="decimal" placeholder="'+(p?'Total (R$)':'0,00')+'" autocomplete="off"><button type="button" class="x" aria-label="Remover da lista" title="Quitada: remover da lista">×</button>';
-r.children[0].value=d?d.nome:'';r.children[1].value=d?fmt2(p?d.total:d.valor):'';r._id=d?d.id:nid();r._pago=d?d.pago:false;r._ult=d?(d.ult||''):'';r._par=p;
+r.children[0].value=d?d.nome:'';r.children[1].value=d?fmt2(p?d.total:d.valor):'';r._id=d?d.id:nid();r._pago=d?d.pago:false;r._pm=d?(d.pm||''):'';r._ult=d?(d.ult||''):'';r._par=p;
 r.querySelector('.x').onclick=function(){r.remove()};
 var cd=document.createElement('input');cd.className='cd';cd.inputMode='numeric';cd.placeholder='Dia';cd.autocomplete='off';cd.maxLength=2;cd.setAttribute('aria-label','Dia do vencimento');cd.title='Dia do vencimento (opcional)';cd.value=d&&d.dia?String(d.dia):'';r.insertBefore(cd,r.children[2]);
 r.children[1].onblur=function(){var v=lerReais(this.value);if(v>=0)this.value=fmt2(v)};
@@ -69,7 +71,7 @@ if(!(sal>=0)){m.textContent='Digite o salário, por exemplo 1.850,00.';return}
 Array.prototype.forEach.call($('dividas').children,function(r){var nome=(r.children[0].value||'').trim(),vs=r.children[1].value.trim(),dia=parseInt((r.querySelector('.cd')||{}).value,10);dia=(dia>=1&&dia<=31)?dia:0;if(!nome&&!vs)return;var v=lerReais(vs);if(!(v>=0)){ok=false;bad='Confira os valores das dívidas: digite algo como 450,00.';return}
  if(r._par){var n=parseInt(r.querySelector('.np').value,10),pg=parseInt(r.querySelector('.pp').value||'0',10);if(!(v>0&&n>=2&&n<=360&&pg>=0&&pg<=n)){ok=false;bad='Confira a dívida parcelada “'+(nome||'sem nome')+'”: total maior que zero, 2 ou mais parcelas e parcelas pagas entre 0 e o total de parcelas.';return}
   var t=Math.round(v*100)/100;arr.push({id:r._id,nome:nome||'Dívida',valor:Math.round(t/n*100)/100,pago:false,n:n,total:t,pagas:pg,ult:pg===0?'':r._ult,dia:dia})}
- else arr.push({id:r._id,nome:nome||'Dívida',valor:Math.round(v*100)/100,pago:r._pago,n:0,total:0,pagas:0,ult:'',dia:dia})});
+ else arr.push({id:r._id,nome:nome||'Dívida',valor:Math.round(v*100)/100,pago:r._pago,pm:r._pm,n:0,total:0,pagas:0,ult:'',dia:dia})});
 if(!ok){m.textContent=bad;return}
 st.salario=Math.round(sal*100)/100;st.dividas=arr;save();render();desenhaDiv();
 var tot=arr.filter(dvAtivo).reduce(function(a,d){return a+dvValor(d)},0);m.textContent='Salvo. Dívidas do mês: '+brl(tot)+(st.salario>0?' · sobra '+brl(st.salario-tot):'')+'.'};
