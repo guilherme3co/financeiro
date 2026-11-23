@@ -10,7 +10,7 @@ saldo=Math.round(saldo*100)/100;TOPO=st.start+g.rec+dv;
 var el=$('saldo');el.textContent=brl(saldo);el.className='saldo'+(saldo<0?' neg':'');
 $('gasto').textContent=brl(tg);
 ring(saldo,gd,0,TOPO);
-var tl=temLimite();$('limc').hidden=!tl;$('fatbtn').hidden=!tl;if(tl){var la=limAtual();$('limc').textContent='Limite '+brl(la);$('limc').style.color=la<0?'var(--neg)':''}
+try{renderCartoes()}catch(e){}var tl=temLimite();$('limc').hidden=!tl;$('fatbtn').hidden=!tl;if(tl){var la=limAtual();$('limc').textContent='Limite '+brl(la);$('limc').style.color=la<0?'var(--neg)':''}
 var nc=st.contas.length;$('entradasTotal').textContent=brl(g.rec);$('guardadoTotal').textContent=brl(tgua+(st.gAnt||0));
 atalhos();renderUlt();renderPrev();try{renderVenc()}catch(e){}try{patriGuarda()}catch(e){}if($('pgx').className.indexOf('on')>=0)try{renderIntel()}catch(e){}
 var gastos=st.items.filter(function(i){return !i.ent&&i.cor!=='gua'}),recs=st.items.filter(function(i){return i.ent}),guar=st.items.filter(function(i){return !i.ent&&i.cor==='gua'});

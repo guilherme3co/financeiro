@@ -20,6 +20,11 @@ function somaCred(o){return r2(o.contas.reduce(function(a,c){return a+(Number(c.
 function somaFat(a){return r2((a||[]).reduce(function(x,f){return x+(Number(f.val)||0)},0))}
 function guaLiq(){var x=0;st.items.forEach(function(i){if(!i.ent&&i.cor==='gua')x+=i.ret?-i.val:i.val});return r2(x)}
 function limAtual(){var x=somaCred(st);st.items.forEach(function(i){if(pagCred(i))x-=i.val});return r2(x+somaFat(st.faturas)-parcFuturo())}
+/* cada conta com limite é um cartão; compra no crédito sem cartão usa o primeiro */
+function cartoes(){return st.contas.filter(function(c){return Number(c.cred)>0})}
+function cartaoDe(i){return i.cartao||((cartoes()[0])||{}).nome||''}
+function usoCartao(c,lista){var x=0;(lista||st.items).forEach(function(i){if(pagCred(i)&&cartaoDe(i)===c.nome)x+=(Number(i.val)||0)});return r2(x)}
+function renderCartoes(){var B=$('cardsBox');if(!B)return;var cs=cartoes();B.hidden=!cs.length;B.innerHTML='';cs.forEach(function(c){var u=usoCartao(c),d=r2((Number(c.cred)||0)-u);var r=document.createElement('div');r.className='cardl';r.textContent='💳 '+c.nome+': disponível '+brl(d)+' de '+brl(Number(c.cred))+(u>0?' · usado '+brl(u):'');if(d<0)r.style.color='var(--neg)';B.appendChild(r)})}
 function temLimite(){return st.contas.some(function(c){return Number(c.cred)})||st.items.some(pagCred)||(st.faturas||[]).length>0||(st.parcelas||[]).length>0}
 function faturaView(){return(st.faturas||[]).map(function(f){return{id:f.id,d:f.d,t:f.t,desc:'Fatura paga',val:f.val,pay:'Fatura',cor:'fat',ent:false,fat:true}})}
 function kor(i){return i.fat?{n:'Fatura',v:'--mute'}:i.ent?COR.rec:(COR[i.cor]||COR.sem)}

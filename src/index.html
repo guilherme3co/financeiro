@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="app-versao" content="v1.6">
+<meta name="app-versao" content="v1.7">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2mIuvmWd42KYbuBI6RzSqdmKPcouCtnYpSH7JdPOXpA=' 'sha256-kKaYbe5Y71dyZxnCPWUZMLEetuuiaifY48HeVES9iKA='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br https://ezivqczibtsqqqzpzcdh.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -192,6 +192,7 @@
 </div>
 <div class="gauge-dots" aria-hidden="true"><i class="active"></i><i></i></div>
 </section>
+<div id="cardsBox" class="cardsbox" hidden></div>
 
 <p class="prev" id="prev" hidden></p>
 <section class="ult" id="ultimos"><div class="ulth"><h2>Últimos lançamentos</h2><button type="button" class="linkb" id="ultver">Ver todos</button></div><div id="ultl"></div></section>
@@ -328,6 +329,7 @@
 <label for="ed" style="margin-top:0">Descrição</label><input id="ed" autocomplete="off">
 <div class="row2"><div><label for="ev">Valor (R$)</label><input id="ev" inputmode="decimal" autocomplete="off"></div><div><label for="edt">Data</label><input id="edt" type="date"></div></div>
 <div class="row2"><div><label for="eh">Hora</label><input id="eh" type="time"></div><div><label for="ep">Pagamento</label><select id="ep"></select></div></div>
+<div id="ecw2" hidden><label for="ecard">Cartão de crédito</label><select id="ecard"></select></div>
 <div id="epw" hidden><label for="epar">Parcelas no crédito</label><select id="epar"></select><p class="hint" id="eparn" style="margin:6px 0 0"></p></div>
 <label>Tipo</label><div class="tipos" id="etipo"></div>
 <div id="ecw" hidden><label for="ecat">Categoria</label><select id="ecat"></select><input id="ecatn" placeholder="Nome da nova categoria" autocomplete="off" maxlength="24" hidden style="margin-top:6px"></div>
